@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enfermedades Comunes en Colegios</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #84fab0, #8fd3f4);
+      color: #333;
+      font-family: 'Arial', sans-serif;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .search-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      background: #f9f9f9;
+    }
+    .btn-primary {
+      background-color: #4caf50;
+      border-color: #4caf50;
+    }
+    .btn-primary:hover {
+      background-color: #45a049;
+    }
+    .text-danger {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container my-5">
+    <h1 class="text-center mb-5">Enfermedades Comunes en Colegios</h1>
+    <div class="search-container mx-auto p-4" style="max-width: 600px;">
+      <label for="sintomasInput" class="form-label">Busca por síntomas (separa por comas):</label>
+      <input type="text" id="sintomasInput" class="form-control mb-3" placeholder="Ejemplo: fiebre, tos">
+      <button id="buscarBtn" class="btn btn-primary w-100">Buscar</button>
+    </div>
+    <div id="resultados" class="mt-5"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
