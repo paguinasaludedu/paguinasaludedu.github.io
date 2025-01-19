@@ -150,7 +150,7 @@ const buscarBtn = document.getElementById('buscarBtn');
 const resultadosDiv = document.getElementById('resultados');
 
 function mostrarResultados(sintomas) {
-  resultadosDiv.innerHTML = ''; // Limpiar resultados anteriores
+  resultadosDiv.innerHTML = ''; 
   const sintomasArray = sintomas.toLowerCase().split(',').map(s => s.trim());
   const enfermedadesFiltradas = enfermedades.filter(enfermedad => 
     sintomasArray.every(s => enfermedad.sintomas.toLowerCase().includes(s))
