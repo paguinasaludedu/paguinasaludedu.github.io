@@ -38,19 +38,80 @@
     .text-danger {
       font-weight: bold;
     }
+    .disease-card {
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    .disease-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .disease-description {
+      font-size: 1rem;
+      color: #555;
+      font-style: italic;
+    }
+    .disease-sintomas,
+    .disease-tratamiento {
+      font-size: 1rem;
+      color: #333;
+    }
   </style>
 </head>
 <body>
   <div class="container my-5">
     <h1 class="text-center mb-5">Enfermedades Comunes en Colegios</h1>
     <div class="search-container mx-auto p-4" style="max-width: 600px;">
-      <label for="sintomasInput" class="form-label">Busca por síntomas (separa por comas):</label>
-      <input type="text" id="sintomasInput" class="form-control mb-3" placeholder="Ejemplo: fiebre, tos">
-      <button id="buscarBtn" class="btn btn-primary w-100">Buscar</button>
+      <label for="sintomasInput" class="form-label" aria-label="Ingrese los síntomas">Busca por síntomas (separa por comas):</label>
+      <input type="text" id="sintomasInput" class="form-control mb-3" placeholder="Ejemplo: fiebre, tos" aria-label="Campo para ingresar síntomas">
+      <button id="buscarBtn" class="btn btn-primary w-100" aria-label="Botón para realizar la búsqueda">Buscar</button>
     </div>
     <div id="resultados" class="mt-5"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Cargar el archivo JSON con las enfermedades
+    fetch('enfermedades.json')
+      .then(response => response.json())
+      .then(data => {
+        const enfermedades = data;
+
+        const sintomasInput = document.getElementById('sintomasInput');
+        const buscarBtn = document.getElementById('buscarBtn');
+        const resultadosDiv = document.getElementById('resultados');
+
+        function mostrarResultados(sintomas) {
+          resultadosDiv.innerHTML = ''; // Limpiar resultados anteriores
+          const sintomasArray = sintomas.toLowerCase().split(',').map(s => s.trim());
+          const enfermedadesFiltradas = enfermedades.filter(enfermedad => 
+            sintomasArray.every(s => enfermedad.sintomas.toLowerCase().includes(s))
+          );
+
+          if (enfermedadesFiltradas.length === 0) {
+            resultadosDiv.innerHTML = '<p class="text-danger">No se encontraron enfermedades que coincidan con esos síntomas.</p>';
+          } else {
+            enfermedadesFiltradas.forEach(enfermedad => {
+              const card = document.createElement('div');
+              card.classList.add('card', 'disease-card');
+              card.innerHTML = `
+                <div class="disease-title">${enfermedad.nombre}</div>
+                <div class="disease-description"><strong>Descripción:</strong> ${enfermedad.descripcion}</div>
+                <div class="disease-sintomas"><strong>Síntomas:</strong> ${enfermedad.sintomas}</div>
+                <div class="disease-tratamiento"><strong>Tratamiento:</strong> ${enfermedad.tratamiento}</div>
+              `;
+              resultadosDiv.appendChild(card);
+            });
+          }
+        }
+
+        buscarBtn.addEventListener('click', () => mostrarResultados(sintomasInput.value));
+        sintomasInput.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter') {
+            mostrarResultados(sintomasInput.value);
+          }
+        });
+      })
+      .catch(error => console.error('Error cargando el archivo JSON:', error));
+  </script>
 </body>
 </html>
